@@ -1,18 +1,18 @@
---- 
-applications: 
-- name: springmvc31
-  framework: spring
-  runtime: java7
+---
+applications:
+- name: springmvc
   memory: 512M
   instances: 1
-  url: sf-springmvc31.${target-base}
-  path: target/springmvc31-1.0.0.war
-  services: 
-    spring-redis: 
-      vendor: redis
-      version: "2.2"
-      tier: free
-    spring-postgres: 
-      vendor: postgresql
-      version: "9.0"
-      tier: free
+  url: springmvc.de.a9sapp.eu
+  path: target/web-1.0.0.war
+  services:
+    redis-springmvc:
+      label: redis
+      provider: core
+      version: '2.2'
+      plan: '100'
+    postgresql-springmvc:
+      label: postgresql
+      provider: core
+      version: '9.0'
+      plan: '100'
