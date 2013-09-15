@@ -5,6 +5,7 @@
 
     <script src="${pageContext.request.contextPath}/web/assets/js/jquery-1.7.2.min.js"></script>
     <script src="${pageContext.request.contextPath}/web/assets/js/angular-1.0.0rc6.js"></script>
+    <script src="${pageContext.request.contextPath}/web/assets/js/qrcode.min.js"></script>
     <script src="${pageContext.request.contextPath}/web/views/controller.js"></script>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/bootstrap/bootstrap.css">
@@ -47,14 +48,48 @@
             </form>
     </div>
  
+    <div>
+    	<a href="/admin/customers">Customers</a>
+    	<a href="/admin/merchants">Merchants</a>
+    	<a href="/admin/bills">Bills</a>
+    	<a href="/admin/registrations">Registrations</a>
+    </div>
 
     <form class="form-horizontal" ng-submit="updateBill">
         <fieldset>
             <legend>
                 <span class="display-visible-{{!isBillLoaded()}}"> Create New Bill </span>
-                <span class="display-visible-{{isBillLoaded()}}"> Update {{bill.token}} {{bill.descriptor}} - <span>#</span>{{bill.id}} </span>
+                <span class="display-visible-{{!!isBillLoaded()}}"> Update {{bill.token}} {{bill.descriptor}} - <span>#</span>{{bill.id}} </span>
             </legend>
-            <!-- TODO: display a read-only token and QR code after it has been saved!!! -->
+            <div class="control-group display-visible-{{isBillLoaded()}}">
+                <label class="control-label" for="billDescriptor">Payment Link:</label>
+
+                <div class="controls">
+                    <div id="qrcode"></div>
+
+                    <p class="help-block">Scan the QR Code or click link to pay</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="billMerchantId">Merchant:</label>
+
+                <div class="controls">
+                	<select id="billMerchantId"
+                		ng-model="bill.merchantId" ng-options="merchant.id as merchant.name for merchant in merchants"></select>
+
+                    <p class="help-block">Change the merchant</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="billCustomerId">Customer:</label>
+
+                <div class="controls">
+                	<select id="billCustomerId"
+                		ng-model="bill.customerId" ng-options="customer.id as customer.id for customer in customers"></select>
+
+                    <p class="help-block">Change the customer</p>
+                </div>
+            </div>
             <div class="control-group">
                 <label class="control-label" for="billDescriptor">Descriptor:</label>
 
@@ -80,7 +115,7 @@
 
                 <div class="controls">
                 	<select id="billCurrency"
-                		ng-model="bill.currency" ng-options="x.id as x.name for x in array"></select>
+                		ng-model="bill.currency" ng-options="currency.value as currency.name for currency in currencies"></select>
 
                     <p class="help-block">Change the currency</p>
                 </div>

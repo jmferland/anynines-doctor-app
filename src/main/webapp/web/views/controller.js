@@ -247,10 +247,36 @@ function MerchantCtrl($scope) {
     };
 }
 
-function BillCtrl($scope) {
+function BillCtrl($scope, $http) {
     $scope.bills = [];
 
     $scope.query = '';
+    
+    $scope.currencies = [
+	    { value: 'EUR', name: 'EUR'},
+	    { value: 'USD', name: 'USD'},
+	    { value: 'CAD', name: 'CAD'}
+    ];
+              
+    $scope.merchants = [];
+    
+    $http({
+	        method: 'GET',
+	        url: '/crm/merchants',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.merchants = result;
+	});
+    
+    $scope.customers = [];
+    
+    $http({
+	        method: 'GET',
+	        url: '/crm/customers',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.customers = result;
+	});
 
     $scope.searchResultsFound = function () {
         return $scope.bills != null && $scope.bills.length > 0;
@@ -287,6 +313,7 @@ function BillCtrl($scope) {
         loadbillById($scope.id, function (c) {
             $scope.$apply(function () {
                 $scope.load(c);
+                new QRCode(document.getElementById("qrcode"), "https://" + location.host + "/pay/" + c.token);
             });
         });
     };
@@ -297,6 +324,7 @@ function BillCtrl($scope) {
         		merchantId: $scope.bill.merchantId,
         		customerId: $scope.bill.customerId,
         		token: $scope.bill.token,
+        		descriptor: $scope.bill.descriptor,
         		amount: $scope.bill.amount,
         		currency: $scope.bill.currency
         	};
@@ -349,6 +377,16 @@ function RegistrationCtrl($scope) {
     $scope.registrations = [];
 
     $scope.query = '';
+
+    $scope.customers = [];
+    
+    $http({
+	        method: 'GET',
+	        url: '/crm/customers',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.customers = result;
+	});
 
     $scope.searchResultsFound = function () {
         return $scope.registrations != null && $scope.registrations.length > 0;

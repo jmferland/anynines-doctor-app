@@ -52,7 +52,7 @@
         <fieldset>
             <legend>
                 <span class="display-visible-{{!isCustomerLoaded()}}"> Create New Customer </span>
-                <span class="display-visible-{{isCustomerLoaded()}}"> Update {{customer.firstName}} {{customer.lastName}} - <span>#</span>{{customer.id}} </span>
+                <span class="display-visible-{{!!isCustomerLoaded()}}"> Update {{customer.firstName}} {{customer.lastName}} - <span>#</span>{{customer.id}} </span>
             </legend>
             <div class="control-group">
                 <label class="control-label" for="fn">First Name:</label>
