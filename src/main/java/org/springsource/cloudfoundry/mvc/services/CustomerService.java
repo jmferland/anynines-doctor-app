@@ -41,7 +41,7 @@ public class CustomerService {
 
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
-        return em.createQuery("SELECT * FROM " + Customer.class.getName()).getResultList();
+        return em.createQuery("from " + Customer.class.getName()).getResultList();
     }
 
     @Cacheable(CUSTOMERS_REGION)

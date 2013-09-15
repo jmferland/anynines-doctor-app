@@ -35,7 +35,7 @@ public class MerchantService {
 
     @Transactional(readOnly = true)
     public List<Merchant> getAllMerchants() {
-        return em.createQuery("SELECT * FROM " + Merchant.class.getName()).getResultList();
+        return em.createQuery("from " + Merchant.class.getName()).getResultList();
     }
     
     @Cacheable(MERCHANTS_REGION)

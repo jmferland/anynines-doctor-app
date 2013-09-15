@@ -32,7 +32,7 @@ public class BillService {
 
     @Transactional(readOnly = true)
     public List<Bill> getAllBills() {
-        return em.createQuery("SELECT * FROM " + Bill.class.getName()).getResultList();
+        return em.createQuery("from " + Bill.class.getName()).getResultList();
     }
     
     @Cacheable(BILLS_REGION)

@@ -35,7 +35,7 @@ public class RegistrationService {
 
     @Transactional(readOnly = true)
     public List<Registration> getAllRegistrations() {
-        return em.createQuery("SELECT * FROM " + Registration.class.getName()).getResultList();
+        return em.createQuery("from " + Registration.class.getName()).getResultList();
     }
     
     @Cacheable(REGISTRATIONS_REGION)

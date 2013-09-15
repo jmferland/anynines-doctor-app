@@ -26,6 +26,12 @@ public class CustomerServiceTest extends BaseServiceTest {
         assertEquals(customer.getLastName(), this.lastName);
         assertEquals(customer.getSignupDate(), this.signupDate);
     }
+    
+    @Test
+    public void testGetAllCustomers() {
+        customerService.createCustomer(this.firstName, this.lastName, this.signupDate);
+        assertEquals(1, customerService.getAllCustomers().size());
+    }
 
     @Test
     public void testUpdatingACustomer() throws Exception {
