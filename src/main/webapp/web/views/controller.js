@@ -179,17 +179,17 @@ function MerchantCtrl($scope) {
             });
         });
     };
-    $scope.ismerchantLoaded = function () {
+    $scope.isMerchantLoaded = function () {
         return $scope.merchant != null && $scope.merchant.id != null && $scope.merchant.id > 0;
     };
 
-    function loadmerchantById(id, cb) {
+    function loadMerchantById(id, cb) {
         var u = utils.url('/crm/merchants/' + id);
         utils.get(u, {}, cb);
     }
 
-    $scope.lookupmerchant = function () {
-        loadmerchantById($scope.id, function (c) {
+    $scope.lookupMerchant = function () {
+        loadMerchantById($scope.id, function (c) {
             $scope.$apply(function () {
                 $scope.load(c);
             });
@@ -222,7 +222,7 @@ function MerchantCtrl($scope) {
             console.log('id is ' + id);
             $scope.$apply(function () {
                 $scope.id = id;
-                $scope.lookupmerchant();
+                $scope.lookupMerchant();
             });
 
         };
@@ -300,17 +300,17 @@ function BillCtrl($scope, $http) {
             });
         });
     };
-    $scope.isbillLoaded = function () {
+    $scope.isBillLoaded = function () {
         return $scope.bill != null && $scope.bill.id != null && $scope.bill.id > 0;
     };
 
-    function loadbillById(id, cb) {
+    function loadBillById(id, cb) {
         var u = utils.url('/crm/bills/' + id);
         utils.get(u, {}, cb);
     }
 
-    $scope.lookupbill = function () {
-        loadbillById($scope.id, function (c) {
+    $scope.lookupBill = function () {
+        loadBillById($scope.id, function (c) {
             $scope.$apply(function () {
                 $scope.load(c);
                 new QRCode(document.getElementById("qrcode"), "https://" + location.host + "/pay/" + c.token);
@@ -348,7 +348,7 @@ function BillCtrl($scope, $http) {
             console.log('id is ' + id);
             $scope.$apply(function () {
                 $scope.id = id;
-                $scope.lookupbill();
+                $scope.lookupBill();
             });
 
         };
@@ -410,17 +410,17 @@ function RegistrationCtrl($scope) {
             });
         });
     };
-    $scope.isregistrationLoaded = function () {
+    $scope.isRegistrationLoaded = function () {
         return $scope.registration != null && $scope.registration.id != null && $scope.registration.id > 0;
     };
 
-    function loadregistrationById(id, cb) {
+    function loadRegistrationById(id, cb) {
         var u = utils.url('/crm/registrations/' + id);
         utils.get(u, {}, cb);
     }
 
-    $scope.lookupregistration = function () {
-        loadregistrationById($scope.id, function (c) {
+    $scope.lookupRegistration = function () {
+        loadRegistrationById($scope.id, function (c) {
             $scope.$apply(function () {
                 $scope.load(c);
             });
@@ -453,7 +453,7 @@ function RegistrationCtrl($scope) {
             console.log('id is ' + id);
             $scope.$apply(function () {
                 $scope.id = id;
-                $scope.lookupregistration();
+                $scope.lookupRegistration();
             });
 
         };
