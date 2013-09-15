@@ -13,3 +13,5 @@ INSERT INTO customer(id, firstname, lastname, signupdate) values( nextval( 'hibe
 INSERT INTO customer(id, firstname, lastname, signupdate) values( nextval( 'hibernate_sequence') , 'Rajdeep', 'Dua', NOW());
 INSERT INTO customer(id, firstname, lastname, signupdate) values( nextval( 'hibernate_sequence') , 'Monica', 'Wilkinson', NOW());
 INSERT INTO customer(id, firstname, lastname, signupdate) values( nextval( 'hibernate_sequence') , 'Mark', 'Pollack', NOW());
+
+INSERT INTO merchant(id, name, creationdate, securitysender, userlogin, userpassword, channelid) values( nextval( 'hibernate_sequence') , 'COPYandPAY Integration Guide', NOW(), '696a8f0fabffea91517d0eb0a0bf9c33', '1143238d620a572a726fe92eede0d1ab', 'demo', '52275ebaf361f20a76b038ba4c806991');
