@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.sql.DataSource;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -70,6 +71,11 @@ public class BaseServiceTest {
                 jdbcTemplate.execute("delete from MERCHANT");
             }
         });
+    }
+    
+    @Test
+    public void noop() {
+    	// so surefire doesn't complain about no test in this class
     }
     
     protected Bill createBill(Merchant merchant)
