@@ -21,7 +21,7 @@
     //-->
 </script>
 
-<div ng-controller="CustomerCtrl">
+<div ng-controller="BillCtrl">
 
     <div style=" z-index: -21; float: left;padding-top :10px; padding:10px;min-width: 250px;max-width:300px;  ">
         <form class="well form-search" ng-submit="search()">
@@ -36,10 +36,10 @@
 
                     <div ng-show=" searchResultsFound()">
 
-                        <div ng-repeat="customer in customers" class="search-results">
+                        <div ng-repeat="bill in bills" class="search-results">
                             <span class="title">
-                                <span style="font-size: smaller"><span>#</span>{{customer.id}}</span>
-                                <a ng-click="load(customer)">{{customer.firstName}} {{customer.lastName}}</a> </span>
+                                <span style="font-size: smaller"><span>#</span>{{bill.id}}</span>
+                                <a ng-click="load(bill)">{{bill.token}} {{bill.descriptor}}</a> </span>
                         </div>
 
                     </div>
@@ -48,30 +48,41 @@
     </div>
  
 
-    <form class="form-horizontal" ng-submit="updateCustomer">
+    <form class="form-horizontal" ng-submit="updateBill">
         <fieldset>
             <legend>
-                <span class="customer-visible-{{!isCustomerLoaded()}}"> Create New Customer </span>
-                <span class="customer-visible-{{isCustomerLoaded()}}"> Update {{customer.firstName}} {{customer.lastName}} - <span>#</span>{{customer.id}} </span>
+                <span class="bill-visible-{{!isBillLoaded()}}"> Create New Bill </span>
+                <span class="bill-visible-{{isBillLoaded()}}"> Update {{bill.token}} {{bill.descriptor}} - <span>#</span>{{bill.id}} </span>
             </legend>
+            <!-- TODO: display a read-only token and QR code after it has been saved!!! -->
             <div class="control-group">
-                <label class="control-label" for="fn">First Name:</label>
+                <label class="control-label" for="billDescriptor">Descriptor:</label>
 
                 <div class="controls">
-                    <input class="input-xlarge" id="fn" type="text" ng-model="customer.firstName"
-                           placeholder="first name" required="required"/>
+                    <input class="input-xlarge" id="billDescriptor" type="text" ng-model="bill.descriptor"
+                           placeholder="descriptor" required="required"/>
 
-                    <p class="help-block">Change the first name</p>
+                    <p class="help-block">Change the descriptor</p>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="ln">Last Name:</label>
+                <label class="control-label" for="billAmount">Amount:</label>
 
                 <div class="controls">
-                    <input class="input-xlarge" id="ln" type="text" ng-model="customer.lastName" placeholder="last name"
-                           required="required"/>
+                    <input class="input-xlarge" id="billAmount" type="text" ng-model="bill.amount"
+                           placeholder="amount" required="required"/>
 
-                    <p class="help-block">Change the last name</p>
+                    <p class="help-block">Change the amount</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="billCurrency">Currency:</label>
+
+                <div class="controls">
+                	<select id="billCurrency"
+                		ng-model="bill.currency" ng-options="x.id as x.name for x in array"></select>
+
+                    <p class="help-block">Change the currency</p>
                 </div>
             </div>
 

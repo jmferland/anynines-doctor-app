@@ -22,12 +22,13 @@ public class BillService {
     @PersistenceContext
     private EntityManager em;
 
-    public Bill createBill(Merchant merchant, Customer customer, BigDecimal amount, String currency) {
+    public Bill createBill(Merchant merchant, Customer customer, BigDecimal amount, String currency, String descriptor) {
         Bill bill = new Bill();
         bill.setMerchant(merchant);
         bill.setCustomer(customer);
         bill.setAmount(amount);
         bill.setCurrency(currency);
+        bill.setDescriptor(descriptor);
         em.persist(bill);
         return bill;
     }
@@ -59,6 +60,7 @@ public class BillService {
         		"    LOWER( b.token ) LIKE :q" +
         		" OR LOWER( b.amount ) LIKE :q" +
         		" OR LOWER( b.currency ) LIKE :q" +
+        		" OR LOWER( b.descriptor ) LIKE :q" +
         		" OR LOWER( m.name ) LIKE :q" +
         		" OR LOWER( m.securitySender ) LIKE :q" +
         		" OR LOWER( m.userLogin ) LIKE :q" +
@@ -79,12 +81,13 @@ public class BillService {
     }
 
     @CacheEvict(value = BILLS_REGION, key = "#id")
-    public void updateBill(Integer id, Merchant merchant, Customer customer, BigDecimal amount, String currency) {
+    public void updateBill(Integer id, Merchant merchant, Customer customer, BigDecimal amount, String currency, String descriptor) {
         Bill bill = getBillById(id);
         bill.setMerchant(merchant);
         bill.setCustomer(customer);
         bill.setAmount(amount);
         bill.setCurrency(currency);
+        bill.setDescriptor(descriptor);
         em.merge(bill);
     }
     

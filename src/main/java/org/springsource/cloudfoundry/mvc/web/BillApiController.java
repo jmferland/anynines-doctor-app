@@ -51,22 +51,24 @@ public class BillApiController {
     @ResponseBody
     @RequestMapping(value = BILLS_ENTRY_URL, method = RequestMethod.PUT)
     public Integer addBill(@RequestParam String merchantId, @RequestParam String customerId,
-    		@RequestParam String amount, @RequestParam String currency) {
+    		@RequestParam String amount, @RequestParam String currency,
+    		@RequestParam String descriptor) {
     	Merchant merchant = merchantService.getMerchantById(Integer.valueOf(merchantId));
     	Customer customer = customerService.getCustomerById(Integer.valueOf(customerId));
     	BigDecimal bdAmount = new BigDecimal(amount);
-        return billService.createBill(merchant, customer, bdAmount, currency).getId();
+        return billService.createBill(merchant, customer, bdAmount, currency, descriptor).getId();
     }
 
     @ResponseBody
     @RequestMapping(value = BILLS_BY_ID_ENTRY_URL, method = RequestMethod.POST)
     public Integer updateBill(@PathVariable  Integer id, @RequestParam String merchantId,
     		@RequestParam String customerId, @RequestParam String amount,
-    		@RequestParam String currency) {
+    		@RequestParam String currency,
+    		@RequestParam String descriptor) {
     	Merchant merchant = merchantService.getMerchantById(Integer.valueOf(merchantId));
     	Customer customer = customerService.getCustomerById(Integer.valueOf(customerId));
     	BigDecimal bdAmount = new BigDecimal(amount);
-        billService.updateBill(id, merchant, customer, bdAmount, currency);
+        billService.updateBill(id, merchant, customer, bdAmount, currency, descriptor);
         return id;
     }
 }

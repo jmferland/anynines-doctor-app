@@ -84,7 +84,8 @@ public class BaseServiceTest {
     			merchant,
     			customer,
     			new BigDecimal("1.00"),
-    			"EUR");
+    			"EUR",
+    			"Amazon.de - Harry Potter and the Deathly Hollows");
     	
     	Bill actual = billService.getBillById(bill.getId());
         

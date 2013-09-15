@@ -51,6 +51,8 @@ public class Bill implements Serializable {
     @Size(min = 3, max = 3)
     private String currency;
     
+    private String descriptor;
+    
 	@ManyToOne
 	@JoinColumn(name = "payment_registration_id", nullable = true)
     private Registration payment;
@@ -128,5 +130,13 @@ public class Bill implements Serializable {
 
 	public void setPayment(Registration payment) {
 		this.payment = payment;
+	}
+
+	public String getDescriptor() {
+		return descriptor;
+	}
+
+	public void setDescriptor(String descriptor) {
+		this.descriptor = descriptor;
 	}
 }

@@ -23,7 +23,8 @@ public class BillServiceTest extends BaseServiceTest {
         Customer customerTwo = createCustomer();
         BigDecimal amountTwo = new BigDecimal("2.00");
         String currencyTwo = "USD";
-        billService.updateBill(bill.getId(), merchantTwo, customerTwo, amountTwo, currencyTwo);
+        String descriptorTwo = "descriptor2";
+        billService.updateBill(bill.getId(), merchantTwo, customerTwo, amountTwo, currencyTwo, descriptorTwo);
         bill = billService.getBillById(bill.getId());
         
         assertThat(bill, is(not(nullValue())));
@@ -31,6 +32,7 @@ public class BillServiceTest extends BaseServiceTest {
         assertThat(bill.getCustomer().getId(), is(customerTwo.getId()));
         assertThat(bill.getAmount(), is(amountTwo));
         assertThat(bill.getCurrency(), is(currencyTwo));
+        assertThat(bill.getDescriptor(), is(descriptorTwo));
     }
     
     @Test
@@ -39,6 +41,7 @@ public class BillServiceTest extends BaseServiceTest {
         
         assertSearchResult(bill.getMerchant().getName(), bill);
         assertSearchResult(bill.getCustomer().getFirstName(), bill);
+        assertSearchResult(bill.getDescriptor(), bill);
     }
     
     private void assertSearchResult(String query, Bill bill) {
