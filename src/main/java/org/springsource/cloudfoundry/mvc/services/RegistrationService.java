@@ -44,10 +44,17 @@ public class RegistrationService {
         return em.find(Registration.class, id);
     }
 
-    public Collection<Registration> getRegistrationByCode(String code) {
+    public Registration getRegistrationByCode(String code) {
         String sql = "select r.* from registration r where r.code = :cd";
-        return em.createNativeQuery(sql, Registration.class)
+        return (Registration) em.createNativeQuery(sql, Registration.class)
                 .setParameter("cd", code)
+                .getSingleResult();
+    }
+
+    public Collection<Registration> getRegistrationsByCustomerId(Integer customerId) {
+        String sql = "select r.* from registration r where r.customer_id = :customerId";
+        return em.createNativeQuery(sql, Registration.class)
+                .setParameter("customerId", customerId)
                 .getResultList();
     }
     
