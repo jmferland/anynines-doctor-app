@@ -50,6 +50,21 @@ public class MerchantService {
                 .setParameter("nm", name)
                 .getResultList();
     }
+    
+    public Collection<Merchant> search(String query) {
+        String sqlQuery = ("%" + query + "%").toLowerCase();
+        String sql = "select m.* from merchant m where" +
+        		" (" +
+        		"    LOWER( m.name ) LIKE :q" +
+        		" OR LOWER( m.securitySender ) LIKE :q" +
+        		" OR LOWER( m.userLogin ) LIKE :q" +
+        		" OR LOWER( m.userPassword ) LIKE :q" +
+        		" OR LOWER( m.channelId ) LIKE :q" +
+        		" )";
+        return em.createNativeQuery(sql, Merchant.class)
+                .setParameter("q", sqlQuery)
+                .getResultList();
+    }
 
     @CacheEvict(MERCHANTS_REGION)
     public void deleteMerchant(Integer id) {

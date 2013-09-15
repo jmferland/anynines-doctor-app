@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -21,9 +22,10 @@ public class BillService {
     @PersistenceContext
     private EntityManager em;
 
-    public Bill createBill(Merchant merchant, BigDecimal amount, String currency) {
+    public Bill createBill(Merchant merchant, Customer customer, BigDecimal amount, String currency) {
         Bill bill = new Bill();
         bill.setMerchant(merchant);
+        bill.setCustomer(customer);
         bill.setAmount(amount);
         bill.setCurrency(currency);
         em.persist(bill);
@@ -46,6 +48,28 @@ public class BillService {
         return (Bill) em.createNativeQuery(sql, Bill.class)
                 .setParameter("tk", token)
                 .getSingleResult();
+    }
+    
+    public Collection<Bill> search(String query) {
+        String lcQuery = ("%" + query + "%").toLowerCase();
+        String sql = "select b.* from bill b, merchant m, customer c where" +
+        		" b.merchant_id = m.id" +
+        		" AND b.customer_id = c.id" +
+        		" AND (" +
+        		"    LOWER( b.token ) LIKE :q" +
+        		" OR LOWER( b.amount ) LIKE :q" +
+        		" OR LOWER( b.currency ) LIKE :q" +
+        		" OR LOWER( m.name ) LIKE :q" +
+        		" OR LOWER( m.securitySender ) LIKE :q" +
+        		" OR LOWER( m.userLogin ) LIKE :q" +
+        		" OR LOWER( m.userPassword ) LIKE :q" +
+        		" OR LOWER( m.channelId ) LIKE :q" +
+        		" OR LOWER( c.firstName ) LIKE :q" +
+        		" OR LOWER( c.lastName ) LIKE :q" +
+        		" )";
+        return em.createNativeQuery(sql, Bill.class)
+                .setParameter("q", lcQuery)
+                .getResultList();
     }
 
     @CacheEvict(BILLS_REGION)

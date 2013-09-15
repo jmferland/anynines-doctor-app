@@ -78,10 +78,11 @@ public class BaseServiceTest {
     	// so surefire doesn't complain about no test in this class
     }
     
-    protected Bill createBill(Merchant merchant)
+    protected Bill createBill(Merchant merchant, Customer customer)
     {
     	Bill bill = billService.createBill(
     			merchant,
+    			customer,
     			new BigDecimal("1.00"),
     			"EUR");
     	

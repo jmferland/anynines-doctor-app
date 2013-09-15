@@ -30,6 +30,11 @@ public class Bill implements Serializable {
 	@JoinColumn(name = "merchant_id", nullable = false)
 	private Merchant merchant;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "customer_id", nullable = false)
+	private Customer customer;
+
     @NotNull
     private Date creationDate = new Date();
 
@@ -64,6 +69,14 @@ public class Bill implements Serializable {
 
 	public void setMerchant(Merchant merchant) {
 		this.merchant = merchant;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Date getCreationDate() {

@@ -50,6 +50,23 @@ public class RegistrationService {
                 .setParameter("cd", code)
                 .getResultList();
     }
+    
+    public Collection<Registration> search(String query) {
+        String lcQuery = ("%" + query + "%").toLowerCase();
+        String sql = "select r.* from registration r, customer c where" +
+        		" r.customer_id = c.id" +
+        		" AND (" +
+        		"    LOWER( r.code ) LIKE :q" +
+        		" OR LOWER( r.brand ) LIKE :q" +
+        		" OR LOWER( r.bin ) LIKE :q" +
+        		" OR LOWER( r.last4Digits ) LIKE :q" +
+        		" OR LOWER( c.firstName ) LIKE :q" +
+        		" OR LOWER( c.lastName ) LIKE :q" +
+        		" )";
+        return em.createNativeQuery(sql, Registration.class)
+                .setParameter("q", lcQuery)
+                .getResultList();
+    }
 
     @CacheEvict(REGISTRATIONS_REGION)
     public void deleteRegistration(Integer id) {
