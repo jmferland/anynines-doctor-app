@@ -48,12 +48,12 @@
             </form>
     </div>
  
-    <div>
-    	<a href="/admin/customers">Customers</a>
-    	<a href="/admin/merchants">Merchants</a>
-    	<a href="/admin/bills">Bills</a>
-    	<a href="/admin/registrations">Registrations</a>
-    </div>
+    <ul class="navi">
+    	<li><a href="/admin/customers">Customers</a></li>
+    	<li><a href="/admin/merchants">Merchants</a></li>
+    	<li><a href="/admin/bills">Bills</a></li>
+    	<li><a href="/admin/registrations">Registrations</a></li>
+    </ul>
 
     <form class="form-horizontal" ng-submit="updateBill">
         <fieldset>
