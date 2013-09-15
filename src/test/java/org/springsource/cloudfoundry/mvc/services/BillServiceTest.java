@@ -20,13 +20,15 @@ public class BillServiceTest extends BaseServiceTest {
         Bill bill = createBill(createMerchant("1"), createCustomer());
         
         Merchant merchantTwo = createMerchant("2");
+        Customer customerTwo = createCustomer();
         BigDecimal amountTwo = new BigDecimal("2.00");
         String currencyTwo = "USD";
-        billService.updateBill(bill.getId(), merchantTwo, amountTwo, currencyTwo);
+        billService.updateBill(bill.getId(), merchantTwo, customerTwo, amountTwo, currencyTwo);
         bill = billService.getBillById(bill.getId());
         
         assertThat(bill, is(not(nullValue())));
-        assertThat(bill.getMerchant().getName(), is(merchantTwo.getName()));
+        assertThat(bill.getMerchant().getId(), is(merchantTwo.getId()));
+        assertThat(bill.getCustomer().getId(), is(customerTwo.getId()));
         assertThat(bill.getAmount(), is(amountTwo));
         assertThat(bill.getCurrency(), is(currencyTwo));
     }

@@ -79,9 +79,10 @@ public class BillService {
     }
 
     @CacheEvict(value = BILLS_REGION, key = "#id")
-    public void updateBill(Integer id, Merchant merchant, BigDecimal amount, String currency) {
+    public void updateBill(Integer id, Merchant merchant, Customer customer, BigDecimal amount, String currency) {
         Bill bill = getBillById(id);
         bill.setMerchant(merchant);
+        bill.setCustomer(customer);
         bill.setAmount(amount);
         bill.setCurrency(currency);
         em.merge(bill);

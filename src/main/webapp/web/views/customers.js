@@ -78,7 +78,7 @@ function CustomerCtrl($scope) {
     };
 
     $scope.search = function () {
-        var u = utils.url('/crm/search?q=' + $scope.query);
+        var u = utils.url('/crm/search/customers?q=' + $scope.query);
         utils.get(u, {}, function (customers) {
             $scope.$apply(function () {
                 $scope.customers = customers;

@@ -18,7 +18,7 @@ public class CustomerApiController {
     @Autowired  private CustomerService customerService;
 
     public static final String CUSTOMERS_ENTRY_URL = "/crm/customers";
-    public static final String CUSTOMERS_SEARCH_URL = "/crm/search";
+    public static final String CUSTOMERS_SEARCH_URL = "/crm/search/customers";
     public static final String CUSTOMERS_BY_ID_ENTRY_URL = CUSTOMERS_ENTRY_URL + "/{id}";
 
     @ResponseBody
