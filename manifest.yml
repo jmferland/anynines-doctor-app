@@ -1,9 +1,9 @@
 ---
 applications:
-- name: springmvc
+- name: doctor-app
   memory: 512M
   instances: 1
-  url: springmvc.de.a9sapp.eu
+  url: doctor-app.de.a9sapp.eu
   path: target/web-1.0.0.war
   services:
     redis-springmvc:
