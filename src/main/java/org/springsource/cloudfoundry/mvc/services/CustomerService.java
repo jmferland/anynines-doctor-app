@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class CustomerService {
 
-    static private final String CUSTOMERS_REGION = "customers";
+	public static final String CUSTOMERS_REGION = "customers";
 
     @PersistenceContext
     private EntityManager em;
@@ -39,12 +39,10 @@ public class CustomerService {
                 .getResultList();
     }
 
-
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
         return em.createQuery("SELECT * FROM " + Customer.class.getName()).getResultList();
     }
-
 
     @Cacheable(CUSTOMERS_REGION)
     @Transactional(readOnly = true)
@@ -64,7 +62,6 @@ public class CustomerService {
         customer.setLastName(ln);
         customer.setSignupDate(birthday);
         customer.setFirstName(fn);
-        //sessionFactory.getCurrentSession().update(customer);
         em.merge(customer);
     }
 }

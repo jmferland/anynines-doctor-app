@@ -14,11 +14,16 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springsource.cloudfoundry.mvc.services.BillService;
 import org.springsource.cloudfoundry.mvc.services.Customer;
+import org.springsource.cloudfoundry.mvc.services.CustomerService;
+import org.springsource.cloudfoundry.mvc.services.MerchantService;
+import org.springsource.cloudfoundry.mvc.services.RegistrationService;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -70,8 +75,13 @@ public class LocalDataSourceConfiguration   {
     @Bean
     public CacheManager cacheManager() throws Exception {
         SimpleCacheManager scm = new SimpleCacheManager();
-        Cache cache = new ConcurrentMapCache("customers");
-        scm.setCaches(Arrays.asList(cache));
+        
+        List<Cache> caches = new LinkedList<Cache>();
+        caches.add(new ConcurrentMapCache(BillService.BILLS_REGION));
+        caches.add(new ConcurrentMapCache(CustomerService.CUSTOMERS_REGION));
+        caches.add(new ConcurrentMapCache(MerchantService.MERCHANTS_REGION));
+        caches.add(new ConcurrentMapCache(RegistrationService.REGISTRATIONS_REGION));
+        scm.setCaches(caches);
         return scm;
     }
 
