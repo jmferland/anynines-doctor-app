@@ -51,8 +51,8 @@
     <form class="form-horizontal" ng-submit="updateBill">
         <fieldset>
             <legend>
-                <span class="bill-visible-{{!isBillLoaded()}}"> Create New Bill </span>
-                <span class="bill-visible-{{isBillLoaded()}}"> Update {{bill.token}} {{bill.descriptor}} - <span>#</span>{{bill.id}} </span>
+                <span class="display-visible-{{!isBillLoaded()}}"> Create New Bill </span>
+                <span class="display-visible-{{isBillLoaded()}}"> Update {{bill.token}} {{bill.descriptor}} - <span>#</span>{{bill.id}} </span>
             </legend>
             <!-- TODO: display a read-only token and QR code after it has been saved!!! -->
             <div class="control-group">

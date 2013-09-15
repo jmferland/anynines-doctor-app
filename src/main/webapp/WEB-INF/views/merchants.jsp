@@ -51,8 +51,8 @@
     <form class="form-horizontal" ng-submit="updateMerchant">
         <fieldset>
             <legend>
-                <span class="merchant-visible-{{!isMerchantLoaded()}}"> Create New Merchant </span>
-                <span class="merchant-visible-{{isMerchantLoaded()}}"> Update {{merchant.name}} - <span>#</span>{{merchant.id}} </span>
+                <span class="display-visible-{{!isMerchantLoaded()}}"> Create New Merchant </span>
+                <span class="display-visible-{{isMerchantLoaded()}}"> Update {{merchant.name}} - <span>#</span>{{merchant.id}} </span>
             </legend>
             <div class="control-group">
                 <label class="control-label" for="merchantName">Name:</label>

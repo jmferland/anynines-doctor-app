@@ -1,7 +1,7 @@
-.customer-visible-true {
+.display-visible-true {
     display:inline;
 }
-.customer-visible-false {
+.display-visible-false {
     display:none;
 }
 .done-true {
