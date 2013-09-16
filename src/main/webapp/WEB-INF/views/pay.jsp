@@ -3,6 +3,13 @@
 <html>
 <head>
     <script src="https://test.ctpe.net/frontend/widget/v3/widget.js?compressed=false&language=en&style=card" ></script>
+    <script type="text/javascript">
+    	$(function() {
+    		$("form.cnpForm input.cardHolderInputField").each(function(i, input) {
+				$(input).val('${bill.customer.firstName} ${bill.customer.lastName}')
+			});
+    	})
+    </script>
 </head>
 <body>
 	<h1>Pay Bill</h1>
