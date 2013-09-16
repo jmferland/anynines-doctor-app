@@ -47,78 +47,80 @@
             </form>
     </div>
  
-    <ul class="navi">
-    	<li><a href="/admin/customers">Customers</a></li>
-    	<li><a href="/admin/merchants">Merchants</a></li>
-    	<li><a href="/admin/bills">Bills</a></li>
-    	<li><a href="/admin/registrations">Registrations</a></li>
-    </ul>
-
-    <form class="form-horizontal" ng-submit="updateMerchant">
-        <fieldset>
-            <legend>
-                <span class="display-visible-{{!isMerchantLoaded()}}"> Create New Merchant </span>
-                <span class="display-visible-{{!!isMerchantLoaded()}}"> Update {{merchant.name}} - <span>#</span>{{merchant.id}} </span>
-            </legend>
-            <div class="control-group">
-                <label class="control-label" for="merchantName">Name:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="merchantName" type="text" ng-model="merchant.name"
-                           placeholder="name" required="required"/>
-
-                    <p class="help-block">Change the name</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="merchantSecuritySender">Security Sender:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="merchantSecuritySender" type="text" ng-model="merchant.securitySender"
-                           placeholder="security sender" required="required"/>
-
-                    <p class="help-block">Change the security sender</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="merchantUserLogin">User Login:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="merchantUserLogin" type="text" ng-model="merchant.userLogin"
-                           placeholder="user login" required="required"/>
-
-                    <p class="help-block">Change the user login</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="merchantUserPassword">User Password:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="merchantUserPassword" type="text" ng-model="merchant.userPassword"
-                           placeholder="user password" required="required"/>
-
-                    <p class="help-block">Change the user password</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="merchantChannelId">Channel Id:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="merchantChannelId" type="text" ng-model="merchant.channelId"
-                           placeholder="channel id" required="required"/>
-
-                    <p class="help-block">Change the channel Id</p>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
-                    <a class="icon-plus"></a> Save
-                </button>
-                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
-            </div>
-        </fieldset>
-    </form>
+    <div class="pull-left" style="padding-top: 10px;">
+	    <ul class="nav nav-tabs">
+	    	<li><a href="/admin/customers">Customers</a></li>
+	    	<li class="active"><a href="/admin/merchants">Merchants</a></li>
+	    	<li><a href="/admin/bills">Bills</a></li>
+	    	<li><a href="/admin/registrations">Registrations</a></li>
+	    </ul>
+	
+	    <form class="form-horizontal" ng-submit="updateMerchant">
+	        <fieldset>
+	            <legend>
+	                <span class="display-visible-{{!isMerchantLoaded()}}"> Create New Merchant </span>
+	                <span class="display-visible-{{!!isMerchantLoaded()}}"> Update {{merchant.name}} - <span>#</span>{{merchant.id}} </span>
+	            </legend>
+	            <div class="control-group">
+	                <label class="control-label" for="merchantName">Name:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="merchantName" type="text" ng-model="merchant.name"
+	                           placeholder="name" required="required"/>
+	
+	                    <p class="help-block">Change the name</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="merchantSecuritySender">Security Sender:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="merchantSecuritySender" type="text" ng-model="merchant.securitySender"
+	                           placeholder="security sender" required="required"/>
+	
+	                    <p class="help-block">Change the security sender</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="merchantUserLogin">User Login:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="merchantUserLogin" type="text" ng-model="merchant.userLogin"
+	                           placeholder="user login" required="required"/>
+	
+	                    <p class="help-block">Change the user login</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="merchantUserPassword">User Password:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="merchantUserPassword" type="text" ng-model="merchant.userPassword"
+	                           placeholder="user password" required="required"/>
+	
+	                    <p class="help-block">Change the user password</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="merchantChannelId">Channel Id:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="merchantChannelId" type="text" ng-model="merchant.channelId"
+	                           placeholder="channel id" required="required"/>
+	
+	                    <p class="help-block">Change the channel Id</p>
+	                </div>
+	            </div>
+	
+	            <div class="form-actions">
+	                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
+	                    <a class="icon-plus"></a> Save
+	                </button>
+	                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
+	            </div>
+	        </fieldset>
+	    </form>
+	</div>
 </div>
 </body>
 </html>

@@ -11,15 +11,23 @@ import org.springsource.cloudfoundry.mvc.services.BillService;
 import org.springsource.cloudfoundry.mvc.services.Merchant;
 import org.springsource.cloudfoundry.mvc.services.Registration;
 import org.springsource.cloudfoundry.mvc.services.RegistrationService;
+import org.springsource.cloudfoundry.mvc.web.ssl.TrustAllTrustManager;
 
 import com.jayway.jsonpath.JsonPath;
 
+import java.io.IOException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 @Controller
 public class PaymentController {
@@ -27,6 +35,7 @@ public class PaymentController {
     
     private static final String GENERATE_TOKEN_URL = "https://test.ctpe.net/frontend/GenerateToken";
     private static final String GET_STATUS_URL = "https://test.ctpe.net/frontend/GetStatus;jsessionid=";
+    private static AtomicReference<Boolean> sslSocketFactoryInitialized = new AtomicReference<Boolean>(false);
 
     @Autowired  private BillService billService;
     @Autowired  private RegistrationService registrationService;
@@ -96,12 +105,8 @@ public class PaymentController {
     
     private String generateToken(Bill bill, Registration registration) throws Exception {
     	try {
-	    	URL url = new URL(GENERATE_TOKEN_URL);
-	    	HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-	    	 
-	    	conn.setRequestMethod("POST");
-	    	conn.setDoInput(true);
-	    	conn.setDoOutput(true);
+    		URL url = new URL(GENERATE_TOKEN_URL);
+	    	HttpsURLConnection conn = getConnection(url);
 	    	
 	    	Merchant merchant = bill.getMerchant();
 	    	 
@@ -139,9 +144,29 @@ public class PaymentController {
     	}
     }
     
+    private static void initSslSocketFactory() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    	if (sslSocketFactoryInitialized.getAndSet(true)) {
+	    	SSLContext sslContext = SSLContext.getInstance("SSL");
+	    	sslContext.init(null, new TrustManager[] { new TrustAllTrustManager() }, new SecureRandom());
+	    	HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+    	}
+    }
+    
+    private HttpsURLConnection getConnection(URL url) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    	initSslSocketFactory();
+    	
+    	HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+    	 
+    	conn.setRequestMethod("POST");
+    	conn.setDoInput(true);
+    	conn.setDoOutput(true);
+    	
+    	return conn;
+    }
+    
     private String getStatus(String token) throws Exception {
     	URL url = new URL(GET_STATUS_URL + token);
-        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        HttpsURLConnection conn = getConnection(url);
          
         String content = IOUtils.toString(conn.getInputStream());
         return content;

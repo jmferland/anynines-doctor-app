@@ -66,7 +66,7 @@ var utils = {
 function CustomerCtrl($scope) {
     $scope.customers = [];
 
-    $scope.query = 'juergen';
+    $scope.query = '';
 
     $scope.searchResultsFound = function () {
         return $scope.customers != null && $scope.customers.length > 0;
@@ -285,6 +285,12 @@ function BillCtrl($scope, $http) {
     $scope.load = function (bill) {
         $scope.bill = bill;
         $scope.id = bill.id;
+        
+        $('#qrcode').empty();
+        var url ="https://" + location.host + "/pay/" + bill.token;
+        console.log('generating qr code for url: ' + url);
+        var qrcode = new QRCode(document.getElementById("qrcode"), url);
+        $('#qrcode').parent().attr('href', url);
     };
 
     $scope.search = function () {
@@ -313,7 +319,6 @@ function BillCtrl($scope, $http) {
         loadBillById($scope.id, function (c) {
             $scope.$apply(function () {
                 $scope.load(c);
-                new QRCode(document.getElementById("qrcode"), "https://" + location.host + "/pay/" + c.token);
             });
         });
     };
@@ -321,8 +326,8 @@ function BillCtrl($scope, $http) {
     $scope.save = function () {
         var id = $scope.id;
         var data = {
-        		merchantId: $scope.bill.merchantId,
-        		customerId: $scope.bill.customerId,
+        		merchantId: $scope.bill.merchant.id,
+        		customerId: $scope.bill.customer.id,
         		token: $scope.bill.token,
         		descriptor: $scope.bill.descriptor,
         		amount: $scope.bill.amount,
@@ -358,7 +363,7 @@ function BillCtrl($scope, $http) {
             // then we're simply going to update it
             u = utils.url('/crm/bills/' + id);
             console.log('JSON to send' + JSON.stringify(data))
-            utils.post(u, JSON.stringify(data), idReceivingCallback);
+            utils.post(u, data, idReceivingCallback);
         }
         else {
             u = utils.url('/crm/bills');
@@ -373,7 +378,7 @@ function BillCtrl($scope, $http) {
     };
 }
 
-function RegistrationCtrl($scope) {
+function RegistrationCtrl($scope, $http) {
     $scope.registrations = [];
 
     $scope.query = '';
@@ -430,7 +435,7 @@ function RegistrationCtrl($scope) {
     $scope.save = function () {
         var id = $scope.id;
         var data = {
-        		customerId: $scope.registration.customerId,
+        		customerId: $scope.registration.customer.id,
         		code: $scope.registration.code,
         		brand: $scope.registration.brand,
         		bin: $scope.registration.bin,
@@ -463,7 +468,7 @@ function RegistrationCtrl($scope) {
             // then we're simply going to update it
             u = utils.url('/crm/registrations/' + id);
             console.log('JSON to send' + JSON.stringify(data))
-            utils.post(u, JSON.stringify(data), idReceivingCallback);
+            utils.post(u, data, idReceivingCallback);
         }
         else {
             u = utils.url('/crm/registrations');

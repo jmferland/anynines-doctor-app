@@ -48,78 +48,80 @@
             </form>
     </div>
  
-    <ul class="navi">
-    	<li><a href="/admin/customers">Customers</a></li>
-    	<li><a href="/admin/merchants">Merchants</a></li>
-    	<li><a href="/admin/bills">Bills</a></li>
-    	<li><a href="/admin/registrations">Registrations</a></li>
-    </ul> 
-
-    <form class="form-horizontal" ng-submit="updateRegistration">
-        <fieldset>
-            <legend>
-                <span class="display-visible-{{!isRegistrationLoaded()}}"> Create New Registration </span>
-                <span class="display-visible-{{!!isRegistrationLoaded()}}"> Update {{registration.token}} {{registration.descriptor}} - <span>#</span>{{registration.id}} </span>
-            </legend>
-            <div class="control-group">
-                <label class="control-label" for="registrationCustomerId">Customer:</label>
-
-                <div class="controls">
-                	<select id="registrationCustomerId"
-                		ng-model="registration.customerId" ng-options="customer.id as customer.id for customer in customers"></select>
-
-                    <p class="help-block">Change the customer</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="registrationCode">Code:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="registrationCode" type="text" ng-model="registration.code"
-                           placeholder="code" required="required"/>
-
-                    <p class="help-block">Change the code (PAY.ON registration number)</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="registrationBrand">Brand:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="registrationBrand" type="text" ng-model="registration.brand"
-                           placeholder="brand" required="required"/>
-
-                    <p class="help-block">Change the brand</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="registrationBin">Bin:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="registrationBin" type="text" ng-model="registration.bin"
-                           placeholder="bin" required="required"/>
-
-                    <p class="help-block">Change the bin</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="registrationLast4Digits">Last 4 Digits:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="registrationLast4Digits" type="text" ng-model="registration.last4Digits"
-                           placeholder="last4Digits" required="required"/>
-
-                    <p class="help-block">Change the last 4 digits</p>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
-                    <a class="icon-plus"></a> Save
-                </button>
-                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
-            </div>
-        </fieldset>
-    </form>
+    <div class="pull-left" style="padding-top: 10px;">
+	    <ul class="nav nav-tabs">
+	    	<li><a href="/admin/customers">Customers</a></li>
+	    	<li><a href="/admin/merchants">Merchants</a></li>
+	    	<li><a href="/admin/bills">Bills</a></li>
+	    	<li class="active"><a href="/admin/registrations">Registrations</a></li>
+	    </ul> 
+	
+	    <form class="form-horizontal" ng-submit="updateRegistration">
+	        <fieldset>
+	            <legend>
+	                <span class="display-visible-{{!isRegistrationLoaded()}}"> Create New Registration </span>
+	                <span class="display-visible-{{!!isRegistrationLoaded()}}"> Update {{registration.token}} {{registration.descriptor}} - <span>#</span>{{registration.id}} </span>
+	            </legend>
+	            <div class="control-group">
+	                <label class="control-label" for="registrationCustomerId">Customer:</label>
+	
+	                <div class="controls">
+	                	<select id="registrationCustomerId" required="required"
+	                		ng-model="registration.customer.id" ng-options="customer.id as customer.id for customer in customers"></select>
+	
+	                    <p class="help-block">Change the customer</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="registrationCode">Code:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="registrationCode" type="text" ng-model="registration.code"
+	                           placeholder="code" required="required"/>
+	
+	                    <p class="help-block">Change the code (PAY.ON registration number)</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="registrationBrand">Brand:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="registrationBrand" type="text" ng-model="registration.brand"
+	                           placeholder="brand" required="required"/>
+	
+	                    <p class="help-block">Change the brand</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="registrationBin">Bin:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="registrationBin" type="text" ng-model="registration.bin"
+	                           placeholder="bin" required="required"/>
+	
+	                    <p class="help-block">Change the bin</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="registrationLast4Digits">Last 4 Digits:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="registrationLast4Digits" type="text" ng-model="registration.last4Digits"
+	                           placeholder="last4Digits" required="required"/>
+	
+	                    <p class="help-block">Change the last 4 digits</p>
+	                </div>
+	            </div>
+	
+	            <div class="form-actions">
+	                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
+	                    <a class="icon-plus"></a> Save
+	                </button>
+	                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
+	            </div>
+	        </fieldset>
+	    </form>
+    </div>
 </div>
 </body>
 </html>

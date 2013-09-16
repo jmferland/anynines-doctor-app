@@ -46,49 +46,51 @@
                 </div>
             </form>
     </div>
- 
-    <ul class="navi">
-    	<li><a href="/admin/customers">Customers</a></li>
-    	<li><a href="/admin/merchants">Merchants</a></li>
-    	<li><a href="/admin/bills">Bills</a></li>
-    	<li><a href="/admin/registrations">Registrations</a></li>
-    </ul>
-
-    <form class="form-horizontal" ng-submit="updateCustomer">
-        <fieldset>
-            <legend>
-                <span class="display-visible-{{!isCustomerLoaded()}}"> Create New Customer </span>
-                <span class="display-visible-{{!!isCustomerLoaded()}}"> Update {{customer.firstName}} {{customer.lastName}} - <span>#</span>{{customer.id}} </span>
-            </legend>
-            <div class="control-group">
-                <label class="control-label" for="fn">First Name:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="fn" type="text" ng-model="customer.firstName"
-                           placeholder="first name" required="required"/>
-
-                    <p class="help-block">Change the first name</p>
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="ln">Last Name:</label>
-
-                <div class="controls">
-                    <input class="input-xlarge" id="ln" type="text" ng-model="customer.lastName" placeholder="last name"
-                           required="required"/>
-
-                    <p class="help-block">Change the last name</p>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
-                    <a class="icon-plus"></a> Save
-                </button>
-                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
-            </div>
-        </fieldset>
-    </form>
+     
+ 	<div class="pull-left" style="padding-top: 10px;">
+	    <ul class="nav nav-tabs">
+	    	<li class="active"><a href="/admin/customers">Customers</a></li>
+	    	<li><a href="/admin/merchants">Merchants</a></li>
+	    	<li><a href="/admin/bills">Bills</a></li>
+	    	<li><a href="/admin/registrations">Registrations</a></li>
+	    </ul>
+	
+	    <form class="form-horizontal" ng-submit="updateCustomer">
+	        <fieldset>
+	            <legend>
+	                <span class="display-visible-{{!isCustomerLoaded()}}"> Create New Customer </span>
+	                <span class="display-visible-{{!!isCustomerLoaded()}}"> Update {{customer.firstName}} {{customer.lastName}} - <span>#</span>{{customer.id}} </span>
+	            </legend>
+	            <div class="control-group">
+	                <label class="control-label" for="fn">First Name:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="fn" type="text" ng-model="customer.firstName"
+	                           placeholder="first name" required="required"/>
+	
+	                    <p class="help-block">Change the first name</p>
+	                </div>
+	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="ln">Last Name:</label>
+	
+	                <div class="controls">
+	                    <input class="input-xlarge" id="ln" type="text" ng-model="customer.lastName" placeholder="last name"
+	                           required="required"/>
+	
+	                    <p class="help-block">Change the last name</p>
+	                </div>
+	            </div>
+	
+	            <div class="form-actions">
+	                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
+	                    <a class="icon-plus"></a> Save
+	                </button>
+	                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
+	            </div>
+	        </fieldset>
+	    </form>
+	</div>
 </div>
 </body>
 </html>
