@@ -63,8 +63,16 @@ var utils = {
     }
 };
 
-function CustomerCtrl($scope) {
+function CustomerCtrl($scope, $http) {
     $scope.customers = [];
+
+    $http({
+	        method: 'GET',
+	        url: '/crm/customers',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.customers = result;
+	});
 
     $scope.query = '';
 
@@ -152,8 +160,16 @@ function CustomerCtrl($scope) {
     };
 }
 
-function MerchantCtrl($scope) {
+function MerchantCtrl($scope, $http) {
     $scope.merchants = [];
+
+    $http({
+	        method: 'GET',
+	        url: '/crm/merchants',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.merchants = result;
+	});
 
     $scope.query = '';
 
@@ -249,6 +265,14 @@ function MerchantCtrl($scope) {
 
 function BillCtrl($scope, $http) {
     $scope.bills = [];
+    
+    $http({
+	        method: 'GET',
+	        url: '/crm/bills',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.bills = result;
+	});
 
     $scope.query = '';
     
@@ -380,6 +404,14 @@ function BillCtrl($scope, $http) {
 
 function RegistrationCtrl($scope, $http) {
     $scope.registrations = [];
+    
+    $http({
+	        method: 'GET',
+	        url: '/crm/registrations',
+	        data: {}
+	    }).success(function (result) {
+	    $scope.registrations = result;
+	});
 
     $scope.query = '';
 
