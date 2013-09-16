@@ -58,7 +58,6 @@ public class BillService {
         		" AND b.customer_id = c.id" +
         		" AND (" +
         		"    LOWER( b.token ) LIKE :q" +
-        		" OR LOWER( b.amount ) LIKE :q" +
         		" OR LOWER( b.currency ) LIKE :q" +
         		" OR LOWER( b.descriptor ) LIKE :q" +
         		" OR LOWER( m.name ) LIKE :q" +
