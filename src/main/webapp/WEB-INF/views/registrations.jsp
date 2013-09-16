@@ -40,7 +40,7 @@
                         <div ng-repeat="registration in registrations" class="search-results">
                             <span class="title">
                                 <span style="font-size: smaller"><span>#</span>{{registration.id}}</span>
-                                <a ng-click="load(registration)">{{registration.code}} {{registration.brand}} {{registration.bin}}******{{registration.l}}</a> </span>
+                                <a ng-click="load(registration)"> {{registration.customer.firstName}} {{registration.customer.lastName}} {{registration.brand}} {{registration.bin}}******{{registration.last4Digits}}</a> </span>
                         </div>
 
                     </div>
