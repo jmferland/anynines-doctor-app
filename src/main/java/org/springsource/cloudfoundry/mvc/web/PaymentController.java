@@ -105,8 +105,7 @@ public class PaymentController {
     
     private String generateToken(Bill bill, Registration registration) throws Exception {
     	try {
-    		URL url = new URL(GENERATE_TOKEN_URL);
-	    	HttpsURLConnection conn = getConnection(url);
+	    	HttpsURLConnection conn = getConnection(GENERATE_TOKEN_URL);
 	    	
 	    	Merchant merchant = bill.getMerchant();
 	    	 
@@ -145,16 +144,17 @@ public class PaymentController {
     }
     
     private static void initSslSocketFactory() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-    	if (sslSocketFactoryInitialized.getAndSet(true)) {
+    	if (!sslSocketFactoryInitialized.getAndSet(true)) {
 	    	SSLContext sslContext = SSLContext.getInstance("SSL");
 	    	sslContext.init(null, new TrustManager[] { new TrustAllTrustManager() }, new SecureRandom());
 	    	HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
     	}
     }
     
-    private HttpsURLConnection getConnection(URL url) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    private HttpsURLConnection getConnection(String urlString) throws IOException, NoSuchAlgorithmException, KeyManagementException {
     	initSslSocketFactory();
     	
+    	URL url = new URL(urlString);
     	HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
     	 
     	conn.setRequestMethod("POST");
@@ -165,7 +165,7 @@ public class PaymentController {
     }
     
     private String getStatus(String token) throws Exception {
-    	URL url = new URL(GET_STATUS_URL + token);
+    	String url = GET_STATUS_URL + token;
         HttpsURLConnection conn = getConnection(url);
          
         String content = IOUtils.toString(conn.getInputStream());
