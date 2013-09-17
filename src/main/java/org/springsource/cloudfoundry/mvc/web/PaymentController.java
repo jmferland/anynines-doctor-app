@@ -2,10 +2,13 @@ package org.springsource.cloudfoundry.mvc.web;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.cloudfoundry.runtime.env.CloudEnvironment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springsource.cloudfoundry.mvc.model.RegistrationToken;
 import org.springsource.cloudfoundry.mvc.services.Bill;
 import org.springsource.cloudfoundry.mvc.services.BillService;
 import org.springsource.cloudfoundry.mvc.services.Merchant;
@@ -21,8 +24,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -41,25 +44,31 @@ public class PaymentController {
     @Autowired  private RegistrationService registrationService;
 
     public static final String PAYMENT_URL = "/pay/{billToken}";
-    public static final String PAYMENT_COMPLETE_URL = "/thanks/{billToken}";
+    public static final String THANKS_URL = "/thanks/{billToken}";
 
     @RequestMapping(value = PAYMENT_URL, method = RequestMethod.GET)
-    public ModelAndView pay(@PathVariable String billToken) throws Exception {
+    public ModelAndView pay(WebRequest request, @PathVariable String billToken) throws Exception {
     	Bill bill = billService.getBillByToken(billToken);
     	Collection<Registration> registrations = registrationService.getRegistrationsByCustomerId(bill.getCustomer().getId());
     	String token = generateToken(bill, null);
     	
-    	Map<String, Registration> tokenToRegistration = generateTokens(bill, registrations);
-    	
     	ModelAndView modelAndView = new ModelAndView("pay");
     	modelAndView.addObject("bill", bill);
     	modelAndView.addObject("token", token);
-    	modelAndView.addObject("tokenToRegistration", tokenToRegistration);
+    	modelAndView.addObject("redirectUrl", getRedirectUrl(request, bill));
+    	modelAndView.addObject("registrationTokens", prepareRegistrations(bill, registrations));
         return modelAndView;
+    }
+    
+    private String getRedirectUrl(WebRequest request, Bill bill) {
+    	String domain = new CloudEnvironment().getInstanceInfo().getUris().get(0);
+    	String context = request.getContextPath();
+    	String redirectUrl = "https://" + domain + context + THANKS_URL;
+    	return redirectUrl.replace("{billToken}", bill.getToken());
     }
 
     @ResponseBody
-    @RequestMapping(value = PAYMENT_COMPLETE_URL, method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = THANKS_URL, method = { RequestMethod.GET, RequestMethod.POST })
     public ModelAndView thanks(@PathVariable String billToken, @RequestParam String token) {
     	boolean success = false;
     	try {
@@ -76,19 +85,19 @@ public class PaymentController {
         return modelAndView;
     }
     
-    private Map<String, Registration> generateTokens(Bill bill, Collection<Registration> registrations) {
-    	Map<String, Registration> tokenToRegistration = new HashMap<String, Registration>();
+    private Set<RegistrationToken> prepareRegistrations(Bill bill, Collection<Registration> registrations) {
+    	Set<RegistrationToken> preparedRegistrations = new TreeSet<RegistrationToken>();
     	
     	for (Registration registration : registrations) {
     		try {
     			String token = generateToken(bill, registration);
-    			tokenToRegistration.put(token, registration);
+    			preparedRegistrations.add(new RegistrationToken(registration, token));
     		} catch (Exception e) {
     			log.error("Exception while generating token for registration id " + registration.getId(), e);
     		}
     	}
     	
-    	return tokenToRegistration;
+    	return preparedRegistrations;
     }
     
     private void addRegistration(String status, String billToken) {
