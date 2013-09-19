@@ -109,7 +109,7 @@
 		</c:if>
 	
 		<c:if test="${not empty registrationTokens}">
-			or <button id="clickToPay">Pay with a New Account</button>
+			or <button id="clickToPay" class="btn btn-primary">Pay with a New Account</button>
 			<script type="text/javascript">
 		    	$(function(){
 					$("#payWithNewAccount").hide();
