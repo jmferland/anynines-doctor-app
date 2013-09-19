@@ -5,6 +5,10 @@
     display:none;
 }
 .done-true {
-    text-decoration: line-through;
     color: grey;
+    text-decoration: line-through;
+}
+.cvvBrandHelp {
+	margin-bottom: 10px;
+	margin-top: -5px;
 }

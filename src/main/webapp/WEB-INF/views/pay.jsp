@@ -1,5 +1,6 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html>
 <head>
@@ -14,7 +15,7 @@
     	})
     	$(function(){
     		$("form.cnpForm .cardSubmitButton").each(function(i, button){
-    			$(button).addClass("btn btn-primary");
+    			$(button).addClass("btn btn-lg btn-primary");
     		});
     	})
     	$(function(){
@@ -78,7 +79,7 @@
 			<dd>${bill.amount} ${bill.currency}</dd>
 			
 			<dt>Date Sent</dt>
-			<dd>${bill.merchant.name}</dd>
+			<dd><fmt:formatDate value="${bill.creationDate}" pattern="yyyy-MM-dd" /></dd>
 		</dl>
 		
 		<c:if test="${not empty registrationTokens}">
@@ -94,7 +95,7 @@
 				<td>${item.registration.brand}</td>
 				<td>************${item.registration.last4Digits}</td>
 				<td>
-					<form action="https://test.ctpe.net/frontend/ExecutePayment;jsessionid=${item.token}">
+					<form style="margin:0; padding:0;" action="https://test.ctpe.net/frontend/ExecutePayment;jsessionid=${item.token}">
 						<!-- TODO: change redirection URL -->
 						<input type="hidden" name="FRONTEND.VERSION" value="3">
 						<input type="hidden" name="FRONTEND.MODE" value="ASYNC">
@@ -108,13 +109,16 @@
 		</c:if>
 	
 		<c:if test="${not empty registrationTokens}">
-			<a id="clickToPay" href="#">or click here to pay with a new account</a>
+			or <button id="clickToPay">Pay with a New Account</button>
 			<script type="text/javascript">
 		    	$(function(){
 					$("#payWithNewAccount").hide();
 		    		$("#clickToPay").click(function(){
 		    			$("#clickToPay").hide();
 		    			$("#payWithNewAccount").slideDown();
+		    			$('html, body').animate({
+    				        scrollTop: $("#payWithNewAccount").offset().top
+    				    }, 2000);
 		    		});
 		    	})
 			</script>
