@@ -70,6 +70,7 @@ public class PaymentController {
     @ResponseBody
     @RequestMapping(value = THANKS_URL, method = { RequestMethod.GET, RequestMethod.POST })
     public ModelAndView thanks(@PathVariable String billToken, @RequestParam String token) {
+    	Bill bill = billService.getBillByToken(billToken);
     	boolean success = false;
     	try {
     		String status = getStatus(token);
@@ -82,6 +83,7 @@ public class PaymentController {
     	ModelAndView modelAndView = new ModelAndView("thanks");
     	modelAndView.addObject("success", success);
     	modelAndView.addObject("billToken", billToken);
+    	modelAndView.addObject("bill", bill);
         return modelAndView;
     }
     

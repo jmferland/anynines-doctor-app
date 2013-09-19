@@ -17,6 +17,44 @@
     			$(button).addClass("btn btn-primary");
     		});
     	})
+    	$(function(){
+    		$("select.expiryMonthSelectBox").prepend("<option value=''>Month</option>").val('');
+    		$("select.expiryYearSelectBox").prepend("<option value=''>Year</option>").val('');
+    	});
+    	$(function(){
+    		$(".cvvInput").append(" <div class='cvvBrandHelp'><a href='javascript:learnMoreCVV()'>Where do I find the verification number?</a></div>");
+    		$(".brandSelectBox").change(function(){
+    			var selectedBrand = $('select.brandSelectBox').val();
+    			var helpExists = cvvHelpBrands[selectedBrand] !== undefined;
+    			var $cvvBrandHelp = $(".cvvBrandHelp");
+    			(helpExists ? $cvvBrandHelp.show() : $cvvBrandHelp.hide());
+    		});
+    		
+    		cvvHelpBrands = {
+    	    		'MASTER': 'mc',
+    	    		'AMEX': 'amex',
+    	    		'VISA': 'visa',
+    	    		'MAESTRO': 'maestro'
+    	    	};
+    		
+    		learnMoreCVV = function(){
+        		var selectedBrand = $('select.brandSelectBox').val();
+        		var helpBrand = cvvHelpBrands[selectedBrand];
+        		var url = 'https://test.ctpe.net/frontend/html/' + helpBrand + '_cvd_en.html';
+        		var width = 250, height = 350;
+    		    if (selectedBrand == "MAESTRO"){ width = 400, height = 450; }
+        		openPopup(url, width, height, 'no');
+        	}
+        	
+    		openPopup = function(url, popW, popH, sb){
+    			w = screen.availWidth;
+    			h = screen.availHeight;
+
+    			var leftPos = (w-popW)/2+10, topPos = (h-popH)/2+50;
+    			var win = window.open(url,'POPUP',"scrollbars=yes,status=no,resizable=no,width=" + popW + ",height=" + popH + ",top=" + topPos + ",left=" + leftPos);
+                win.focus();
+    		}
+    	});
     </script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css">
@@ -30,11 +68,17 @@
 			<dt>Patient</dt>
 			<dd>${bill.customer.firstName} ${bill.customer.lastName}</dd>
 			
-			<dt>Descriptor</dt>
+			<dt>Doctor</dt>
+			<dd>${bill.merchant.name}</dd>
+			
+			<dt>Description</dt>
 			<dd>${bill.descriptor}</dd>
 			
 			<dt>Amount</dt>
 			<dd>${bill.amount} ${bill.currency}</dd>
+			
+			<dt>Date Sent</dt>
+			<dd>${bill.merchant.name}</dd>
 		</dl>
 		
 		<c:if test="${not empty registrationTokens}">
@@ -63,10 +107,24 @@
 		</table>
 		</c:if>
 	
-		<h3>Pay With a New Account</h3>
-	    <form action="${redirectUrl}" id="${token}">
-	        VISA AMEX MASTER
-	    </form>
+		<c:if test="${not empty registrationTokens}">
+			<a id="clickToPay" href="#">or click here to pay with a new account</a>
+			<script type="text/javascript">
+		    	$(function(){
+					$("#payWithNewAccount").hide();
+		    		$("#clickToPay").click(function(){
+		    			$("#clickToPay").hide();
+		    			$("#payWithNewAccount").slideDown();
+		    		});
+		    	})
+			</script>
+		</c:if>
+		<div id="payWithNewAccount">
+			<h3>Pay With a New Account</h3>
+		    <form action="${redirectUrl}" id="${token}">
+		        VISA AMEX MASTER
+		    </form>
+	    </div>
     </div>
 </body>
 </html>

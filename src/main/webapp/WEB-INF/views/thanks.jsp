@@ -1,4 +1,5 @@
 <%@ page session="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
 <head>
@@ -10,7 +11,10 @@
 <body>
 	<div style="padding: 10px; max-width: 520px">
 		<img class="logo" src="${pageContext.request.contextPath}/web/assets/img/medical-payments.png" alt="Medical Payments"/>
-		<p>Thank you for paying! Ciao!</p>
+		<p>Thank you for paying, ${bill.customer.firstName} ${bill.customer.lastName}. Hope you're better!</p>
+		<c:if test="${not success}">
+			<p>Unfortunately, your payment was <strong>unsuccessful</strong>.</p> <a href="/pay/${billToken}">Click here to try and pay again.</a>
+		</c:if>
 	</div>
 </body>
 </html>
