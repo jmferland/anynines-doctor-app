@@ -50,8 +50,8 @@
  
     <div class="pull-left" style="padding-top: 10px;">
 	    <ul class="nav nav-tabs">
-	    	<li><a href="/admin/customers">Customers</a></li>
-	    	<li><a href="/admin/merchants">Merchants</a></li>
+	    	<li><a href="/admin/customers">Doctors</a></li>
+	    	<li><a href="/admin/merchants">Patients</a></li>
 	    	<li><a href="/admin/bills">Bills</a></li>
 	    	<li class="active"><a href="/admin/registrations">Registrations</a></li>
 	    </ul> 

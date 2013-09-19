@@ -49,8 +49,8 @@
  
     <div class="pull-left" style="padding-top: 10px;">
 	    <ul class="nav nav-tabs">
-	    	<li><a href="/admin/customers">Customers</a></li>
-	    	<li class="active"><a href="/admin/merchants">Merchants</a></li>
+	    	<li><a href="/admin/customers">Patients</a></li>
+	    	<li class="active"><a href="/admin/merchants">Doctors</a></li>
 	    	<li><a href="/admin/bills">Bills</a></li>
 	    	<li><a href="/admin/registrations">Registrations</a></li>
 	    </ul>

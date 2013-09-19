@@ -50,8 +50,8 @@
  
  	<div class="pull-left" style="padding-top: 10px;">
 	    <ul class="nav nav-tabs">
-	    	<li><a href="/admin/customers">Customers</a></li>
-	    	<li><a href="/admin/merchants">Merchants</a></li>
+	    	<li><a href="/admin/customers">Patients</a></li>
+	    	<li><a href="/admin/merchants">Doctors</a></li>
 	    	<li class="active"><a href="/admin/bills">Bills</a></li>
 	    	<li><a href="/admin/registrations">Registrations</a></li>
 	    </ul>
@@ -73,33 +73,33 @@
 	                </div>
 	            </div>
 	            <div class="control-group">
-	                <label class="control-label" for="billMerchantId">Merchant:</label>
+	                <label class="control-label" for="billMerchantId">Doctor:</label>
 	
 	                <div class="controls">
 	                	<select id="billMerchantId" required="required"
 	                		ng-model="bill.merchant.id" ng-options="merchant.id as merchant.name for merchant in merchants"></select>
 	
-	                    <p class="help-block">Change the merchant</p>
+	                    <p class="help-block">Change the doctor</p>
 	                </div>
 	            </div>
 	            <div class="control-group">
-	                <label class="control-label" for="billCustomerId">Customer:</label>
+	                <label class="control-label" for="billCustomerId">Patient:</label>
 	
 	                <div class="controls">
 	                	<select id="billCustomerId" required="required"
 	                		ng-model="bill.customer.id" ng-options="customer.id as customer.id for customer in customers"></select>
 	
-	                    <p class="help-block">Change the customer</p>
+	                    <p class="help-block">Change the patient</p>
 	                </div>
 	            </div>
 	            <div class="control-group">
-	                <label class="control-label" for="billDescriptor">Descriptor:</label>
+	                <label class="control-label" for="billDescriptor">Description:</label>
 	
 	                <div class="controls">
 	                    <input class="input-xlarge" id="billDescriptor" type="text" ng-model="bill.descriptor"
 	                           placeholder="descriptor" required="required"/>
 	
-	                    <p class="help-block">Change the descriptor</p>
+	                    <p class="help-block">Change the description</p>
 	                </div>
 	            </div>
 	            <div class="control-group">
