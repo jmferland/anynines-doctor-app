@@ -22,13 +22,14 @@ public class RegistrationService {
     private EntityManager em;
 
     public Registration createRegistration(Customer customer, String code,
-    		String brand, String bin, String last4Digits) {
+    		String brand, String bin, String last4Digits, Expiry expiry) {
         Registration registration = new Registration();
         registration.setCustomer(customer);
         registration.setCode(code);
         registration.setBrand(brand);
         registration.setBin(bin);
         registration.setLast4Digits(last4Digits);
+        registration.setExpiry(expiry);
         em.persist(registration);
         return registration;
     }
@@ -83,13 +84,14 @@ public class RegistrationService {
 
     @CacheEvict(value = REGISTRATIONS_REGION, key = "#id")
     public void updateRegistration(Integer id, Customer customer, String code,
-    		String brand, String bin, String last4Digits) {
+    		String brand, String bin, String last4Digits, Expiry expiry) {
     	Registration registration = getRegistrationById(id);
         registration.setCustomer(customer);
         registration.setCode(code);
         registration.setBrand(brand);
         registration.setBin(bin);
         registration.setLast4Digits(last4Digits);
+        registration.setExpiry(expiry);
         em.merge(registration);
     }
 }

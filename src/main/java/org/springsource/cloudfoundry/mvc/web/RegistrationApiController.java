@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springsource.cloudfoundry.mvc.services.Expiry;
 import org.springsource.cloudfoundry.mvc.services.Registration;
 import org.springsource.cloudfoundry.mvc.services.RegistrationService;
 import org.springsource.cloudfoundry.mvc.services.Customer;
@@ -52,9 +53,12 @@ public class RegistrationApiController {
     		@RequestParam String code,
     		@RequestParam String brand,
     		@RequestParam String bin,
-    		@RequestParam String last4Digits) {
+    		@RequestParam String last4Digits,
+    		@RequestParam String expiryYear,
+    		@RequestParam String expiryMonth) {
+    	Expiry expiry = new Expiry().setMonth(expiryMonth).setYear(expiryYear);
     	Customer customer = customerService.getCustomerById(Integer.valueOf(customerId));
-        return registrationService.createRegistration(customer, code, brand, bin, last4Digits).getId();
+        return registrationService.createRegistration(customer, code, brand, bin, last4Digits, expiry).getId();
     }
 
     @ResponseBody
@@ -64,9 +68,19 @@ public class RegistrationApiController {
     		@RequestParam String code,
     		@RequestParam String brand,
     		@RequestParam String bin,
-    		@RequestParam String last4Digits) {
+    		@RequestParam String last4Digits,
+    		@RequestParam String expiryYear,
+    		@RequestParam String expiryMonth) {
+    	Expiry expiry = new Expiry().setMonth(expiryMonth).setYear(expiryYear);
     	Customer customer = customerService.getCustomerById(Integer.valueOf(customerId));
-        registrationService.updateRegistration(id, customer, code, brand, bin, last4Digits);
+        registrationService.updateRegistration(id, customer, code, brand, bin, last4Digits, expiry);
         return id;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = REGISTRATIONS_BY_ID_ENTRY_URL, method = RequestMethod.DELETE)
+    public void deleteRegistrationById(@PathVariable  Integer id) {
+        this.registrationService.deleteRegistration(id);
     }
 }

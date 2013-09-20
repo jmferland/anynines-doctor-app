@@ -63,6 +63,10 @@ var utils = {
     }
 };
 
+function leftZeroPad(str, max) {
+	return str.length < max ? leftZeroPad("0" + str, max) : str;
+}
+
 function CustomerCtrl($scope, $http) {
     $scope.customers = [];
 
@@ -424,6 +428,29 @@ function RegistrationCtrl($scope, $http) {
 	    }).success(function (result) {
 	    $scope.customers = result;
 	});
+    
+    $scope.months = (function(){
+    	var months = [{"value": '', "text": 'Month'}];
+    	for (var i = 1; i <= 12; i++) {
+    		var value = leftZeroPad(i + "", 2);
+    		console.log("month value: " + value);
+    		months.push({"value": value, "text": i});
+    	}
+    	console.log("months: " + months);
+    	return months;
+    })();
+    
+    $scope.years = [];
+    
+    $scope.years = (function(){
+    	var years = [{"value": '', "text": 'Year'}];
+    	for (var i = 2013; i <= 2040; i++) {
+    		console.log("year value: " + i);
+    		years.push({"value": i, "text": i});
+    	}
+    	console.log("years: " + years);
+    	return years;
+    })();
 
     $scope.searchResultsFound = function () {
         return $scope.registrations != null && $scope.registrations.length > 0;
@@ -471,7 +498,9 @@ function RegistrationCtrl($scope, $http) {
         		code: $scope.registration.code,
         		brand: $scope.registration.brand,
         		bin: $scope.registration.bin,
-        		last4Digits: $scope.registration.last4Digits
+        		last4Digits: $scope.registration.last4Digits,
+        		expiryMonth: $scope.registration.expiry.month,
+        		expiryYear: $scope.registration.expiry.year
         	};
 
         function exists(o, p, cb) {
@@ -512,5 +541,25 @@ function RegistrationCtrl($scope, $http) {
     $scope.trash = function () {
         $scope.id = null;
         $scope.registration = null;
+    };
+
+    $scope.delete = function () {
+    	$http({
+		        method: 'DELETE',
+		        url: '/crm/registrations/' + $scope.registration.id,
+		        data: {}
+		    }).success(function (result) {
+		    $scope.registrations = result;
+		});
+    	var index = -1;
+    	for (var i = 0; i < $scope.registrations.length; i++) {
+    		if ($scope.registrations[i].id === $scope.registration.id) {
+    			index = i;
+    			break;
+    		}
+    	}
+    	if (index > -1) {
+    		$scope.registrations.splice(index, 1);
+    	}
     };
 }

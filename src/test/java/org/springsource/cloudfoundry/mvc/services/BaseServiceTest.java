@@ -133,12 +133,14 @@ public class BaseServiceTest {
     }
     
     protected Registration createRegistration(Customer customer) {
+    	Expiry expiry = new Expiry().setMonth("11").setYear("2017");
     	Registration registration = registrationService.createRegistration(
     			customer, 
     			"01234567890123456789012345678901",
     			"VISA",
     			"420000",
-    			"0000");
+    			"0000",
+    			expiry);
     	
     	Registration actual = registrationService.getRegistrationById(registration.getId());
         
@@ -147,6 +149,7 @@ public class BaseServiceTest {
         assertThat(actual.getBrand(), is(registration.getBrand()));
         assertThat(actual.getBin(), is(registration.getBin()));
         assertThat(actual.getLast4Digits(), is(registration.getLast4Digits()));
+        assertThat(actual.getExpiry(), is(expiry));
     	
     	return registration;
     }

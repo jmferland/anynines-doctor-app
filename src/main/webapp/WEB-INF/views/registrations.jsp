@@ -67,7 +67,7 @@
 	
 	                <div class="controls">
 	                	<select id="registrationCustomerId" required="required"
-	                		ng-model="registration.customer.id" ng-options="customer.id as customer.id for customer in customers"></select>
+	                		ng-model="registration.customer.id" ng-options="customer.id as customer.firstName + ' ' + customer.lastName for customer in customers"></select>
 	
 	                    <p class="help-block">Change the customer</p>
 	                </div>
@@ -112,11 +112,24 @@
 	                    <p class="help-block">Change the last 4 digits</p>
 	                </div>
 	            </div>
+	            <div class="control-group">
+	                <label class="control-label" for="registrationExpiry">Expiry Date:</label>
+	
+	                <div class="controls">
+	                	<select id="registrationExpiry"
+	                		ng-model="registration.expiry.month" ng-options="month.value as month.text for month in months"></select>
+	                	<select
+	                		ng-model="registration.expiry.year" ng-options="year.value as year.text for year in years"></select>
+	                		
+	                    <p class="help-block">Change the expiry date</p>
+	                </div>
+	            </div>
 	
 	            <div class="form-actions">
 	                <button type="submit" class="btn btn-primary" ng-click="save()" ng-model-instant>
 	                    <a class="icon-plus"></a> Save
 	                </button>
+	                <button class="btn btn-danger" ng-click="delete()" onclick="return confirm('Are you sure you want to delete this?')"><a class="icon-minus"></a> Delete</button>
 	                <button class="btn " ng-click="trash()"><a class="icon-trash"></a> Cancel</button>
 	            </div>
 	        </fieldset>

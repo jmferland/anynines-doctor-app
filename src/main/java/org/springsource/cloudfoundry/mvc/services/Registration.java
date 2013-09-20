@@ -1,12 +1,14 @@
 package org.springsource.cloudfoundry.mvc.services;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -43,6 +45,10 @@ public class Registration implements Serializable {
 	
 	@Size(min = 4, max = 4)
 	private String last4Digits;
+	
+	@Valid
+	@Embedded
+	private Expiry expiry = new Expiry();
 
 	public Integer getId() {
 		return id;
@@ -98,5 +104,13 @@ public class Registration implements Serializable {
 
 	public void setLast4Digits(String last4Digits) {
 		this.last4Digits = last4Digits;
+	}
+
+	public Expiry getExpiry() {
+		return expiry;
+	}
+
+	public void setExpiry(Expiry expiry) {
+		this.expiry = expiry;
 	}
 }

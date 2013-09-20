@@ -87,7 +87,7 @@
 	
 	                <div class="controls">
 	                	<select id="billCustomerId" required="required"
-	                		ng-model="bill.customer.id" ng-options="customer.id as customer.id for customer in customers"></select>
+	                		ng-model="bill.customer.id" ng-options="customer.id as customer.firstName + ' ' + customer.lastName for customer in customers"></select>
 	
 	                    <p class="help-block">Change the patient</p>
 	                </div>
@@ -97,7 +97,7 @@
 	
 	                <div class="controls">
 	                    <input class="input-xlarge" id="billDescriptor" type="text" ng-model="bill.descriptor"
-	                           placeholder="descriptor" required="required"/>
+	                           placeholder="description" required="required"/>
 	
 	                    <p class="help-block">Change the description</p>
 	                </div>

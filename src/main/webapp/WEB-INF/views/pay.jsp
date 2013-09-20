@@ -58,7 +58,7 @@
     	});
     </script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/assets/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/web/views/style.css">
 </head>
 <body>
 	<div style="padding: 10px; max-width: 520px">
@@ -76,7 +76,7 @@
 			<dd>${bill.descriptor}</dd>
 			
 			<dt>Amount</dt>
-			<dd>${bill.amount} ${bill.currency}</dd>
+			<dd><fmt:formatNumber type="number" maxFractionDigits="2" value="${bill.amount}" /> ${bill.currency}</dd>
 			
 			<dt>Date Sent</dt>
 			<dd><fmt:formatDate value="${bill.creationDate}" pattern="yyyy-MM-dd" /></dd>
@@ -88,12 +88,14 @@
 			<tr>
 				<th>Brand</th>
 				<th>Account</th>
+				<th>Expiry</th>
 				<th></th>
 			</tr>
 			<c:forEach items="${registrationTokens}" var="item">
 			<tr>
 				<td>${item.registration.brand}</td>
 				<td>************${item.registration.last4Digits}</td>
+				<td>${item.registration.expiry.month}-${item.registration.expiry.year}</td>
 				<td>
 					<form style="margin:0; padding:0;" action="https://test.ctpe.net/frontend/ExecutePayment;jsessionid=${item.token}">
 						<!-- TODO: change redirection URL -->

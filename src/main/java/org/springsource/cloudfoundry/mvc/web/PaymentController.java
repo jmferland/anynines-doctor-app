@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springsource.cloudfoundry.mvc.model.RegistrationToken;
 import org.springsource.cloudfoundry.mvc.services.Bill;
 import org.springsource.cloudfoundry.mvc.services.BillService;
+import org.springsource.cloudfoundry.mvc.services.Expiry;
 import org.springsource.cloudfoundry.mvc.services.Merchant;
 import org.springsource.cloudfoundry.mvc.services.Registration;
 import org.springsource.cloudfoundry.mvc.services.RegistrationService;
@@ -102,16 +103,41 @@ public class PaymentController {
     	return preparedRegistrations;
     }
     
-    private void addRegistration(String status, String billToken) {
+    private void addRegistration(final String status, String billToken) {
     	try {
+    		String registrationCode = JsonPath.read(status, "$.transaction.account.registration"); // might not exist if paid with RG
     		String brand = JsonPath.read(status, "$.transaction.account.brand");
     		String bin = JsonPath.read(status, "$.transaction.account.bin");
     		String last4Digits = JsonPath.read(status, "$.transaction.account.last4Digits");
-    		String registrationCode = JsonPath.read(status, "$.transaction.account.registration"); // might not exist if paid with RG
+    		Expiry expiry = getExpiry(status);
     		
         	Bill bill = billService.getBillByToken(billToken);
-    		registrationService.createRegistration(bill.getCustomer(), registrationCode, brand, bin, last4Digits);
+    		registrationService.createRegistration(bill.getCustomer(), registrationCode, brand, bin, last4Digits, expiry);
     	} catch (Exception e) {} // if we can't get info to add, don't add it! If it's already added, who cares!
+    }
+    
+    private Expiry getExpiry(final String status) {
+    	Expiry expiry = new Expiry();
+    	String expiryYear = new Attempt<String>() { @Override String to() { return JsonPath.read(status, "$.transaction.account.expiry.year"); }}.get();
+		String expiryMonth = new Attempt<String>() { @Override String to() { return JsonPath.read(status, "$.transaction.account.expiry.month"); }}.get();;
+		expiry.setMonth(expiryMonth);
+		expiry.setYear(expiryYear);
+		return expiry;
+    }
+    
+    public abstract static class Attempt<T> {
+    	abstract T to();
+    	
+    	public T get() {
+    		return get(null);
+    	}
+    	
+    	public T get(T defaultValue) {
+    		try {
+    			return to();
+    		} catch (Exception e) {}
+    		return defaultValue;
+    	}
     }
     
     private String generateToken(Bill bill, Registration registration) throws Exception {

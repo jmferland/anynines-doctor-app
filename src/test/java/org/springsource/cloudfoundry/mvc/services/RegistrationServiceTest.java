@@ -11,14 +11,15 @@ public class RegistrationServiceTest extends BaseServiceTest {
     
     @Test
     public void testSearch_Success() {
-    	Merchant merchant = createMerchant("asdf");
+    	Customer customer = createCustomer();
+    	Registration registration = createRegistration(customer);
         
-        assertSearchResult(merchant.getName(), merchant);
+        assertSearchResult(registration.getBrand(), registration);
     }
     
-    private void assertSearchResult(String query, Merchant merchant) {
-    	Collection<Merchant> results = merchantService.search(query);
+    private void assertSearchResult(String query, Registration registration) {
+    	Collection<Registration> results = registrationService.search(query);
         assertThat(results.size(), is(1));
-        assertThat(results.iterator().next().getId(), is(merchant.getId()));
+        assertThat(results.iterator().next().getId(), is(registration.getId()));
     }
 }
